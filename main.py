@@ -1,2 +1,6 @@
+from utils import InputParser
+
+
 if __name__ == "__main__":
-    print("hiii")
+    input_parser = InputParser()
+    print(input_parser)
