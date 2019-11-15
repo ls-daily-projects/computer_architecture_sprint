@@ -35,7 +35,13 @@ class CPU():
             if self.opcode_processor.is_valid_opcode(self.current_mem_address):
                 pc_delta = self.opcode_processor.instruction_for_opcode(
                     self.current_mem_address)()
-                self.program_counter += pc_delta
+
+                self.program_counter += pc_delta + 1
+
+                print("opcode ->", self.current_mem_address,
+                      self.main_register, bin(self.current_flags), "counter ->", self.program_counter)
                 continue
 
             self.program_counter += 1
+            print("arg ->", self.current_mem_address,
+                  self.main_register, bin(self.current_flags), "counter ->", self.program_counter)
