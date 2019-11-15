@@ -1,5 +1,5 @@
 from utils import InputParser
-from ls8_emulator import LS8Parser
+from ls8_emulator import LS8Parser, CPU
 
 if __name__ == "__main__":
     input_parser = InputParser()
@@ -8,4 +8,6 @@ if __name__ == "__main__":
     ls8_parser = LS8Parser()
     ls8_parser.parse(filename)
 
-    print(ls8_parser.lines_of_code)
+    cpu = CPU()
+    cpu.load_program(ls8_parser.lines_of_code)
+    cpu.start()

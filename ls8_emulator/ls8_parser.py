@@ -7,9 +7,6 @@ class LS8Parser():
             for line in file:
                 parsed_line = line_parser(line)
 
-                if not parsed_line:
-                    continue
-
                 self.lines_of_code.append(parsed_line)
 
         return self
@@ -24,9 +21,9 @@ class LS8Parser():
             return None
 
         if "#" in line:
-            line = line.split("#")[0]
+            line = line.split("#")[0].strip()
 
-        return line
+        return int(line, 2)
 
     def parse(self, filename):
         if not filename:
