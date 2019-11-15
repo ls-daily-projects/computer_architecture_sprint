@@ -8,7 +8,8 @@ class OpcodeProcessor():
             0b10100010: self.multiply,
             0b10100111: self.compare,
             0b01010101: self.jump_if_equal,
-            0b01010110: self.jump_if_not_equal
+            0b01010110: self.jump_if_not_equal,
+            0b01010100: self.jump
         }
 
     def load_data_immediately(self):
@@ -47,6 +48,11 @@ class OpcodeProcessor():
             self.cpu.current_flags = 0b001
 
         return 2
+
+    def jump(self):
+        register = self.cpu.ram.read(self.cpu.program_counter + 1)
+        self.cpu.program_counter = self.cpu.main_register[register]
+        return -1
 
     def jump_if_equal(self):
         current_count = self.cpu.program_counter
