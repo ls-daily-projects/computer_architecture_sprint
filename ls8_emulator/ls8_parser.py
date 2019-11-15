@@ -26,7 +26,7 @@ class LS8Parser():
         if "#" in line:
             line = line.split("#")[0].strip()
 
-        return line
+        return bin(int(line, 2))
 
     def parse(self, filename):
         if not filename:
