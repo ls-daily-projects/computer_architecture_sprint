@@ -24,7 +24,7 @@ class LS8Parser():
             return None
 
         if "#" in line:
-            line = line.split("#")[0]
+            line = line.split("#")[0].strip()
 
         return line
 
