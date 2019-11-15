@@ -9,6 +9,5 @@ if __name__ == "__main__":
     ls8_parser.parse(filename)
 
     cpu = CPU()
+    cpu.load_program(ls8_parser.lines_of_code)
     cpu.start()
-
-    print(ls8_parser.lines_of_code)
