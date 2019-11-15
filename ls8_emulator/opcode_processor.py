@@ -5,7 +5,8 @@ class OpcodeProcessor():
             0b10000010: self.load_data_immediately,
             0b01000111: self.print_data,
             0b00000001: self.halt_cpu,
-            0b10100010: self.multiply
+            0b10100010: self.multiply,
+            0b10100111: self.compare
         }
 
     def load_data_immediately(self):
@@ -26,6 +27,23 @@ class OpcodeProcessor():
         num_1 = self.cpu.main_register[num_1_location]
         num_2 = self.cpu.main_register[num_2_location]
         print(num_1 * num_2)
+        return 2
+
+    def compare(self):
+        current_count = self.cpu.program_counter
+        register_a_index = self.cpu.ram.read(current_count + 1)
+        register_b_index = self.cpu.ram.read(current_count + 2)
+        a = self.cpu.main_register[register_a_index]
+        b = self.cpu.main_register[register_b_index]
+
+        # TODO: Use bitshifting instead
+        if a < b:
+            self.cpu.current_flags = 100
+        elif a > b:
+            self.cpu.current_flags = 10
+        else:
+            self.cpu.current_flags = 1
+
         return 2
 
     def halt_cpu(self):
