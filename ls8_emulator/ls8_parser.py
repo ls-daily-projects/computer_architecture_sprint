@@ -7,6 +7,9 @@ class LS8Parser():
             for line in file:
                 parsed_line = line_parser(line)
 
+                if parsed_line == None:
+                    continue
+
                 self.lines_of_code.append(parsed_line)
 
         return self
