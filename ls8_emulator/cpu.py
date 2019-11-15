@@ -1,4 +1,7 @@
+import weakref
+
 from .ram import RAM
+from .opcode_processor import OpcodeProcessor
 
 
 class CPU():
@@ -6,6 +9,7 @@ class CPU():
         self.is_running = False
 
         # Registers
+        self.main_register = [0b0] * 8
         self.program_counter = 0
         self.current_mem_address = 0
         self.current_mem_data = 0
@@ -13,6 +17,7 @@ class CPU():
         self.current_flags = 0
 
         self.ram = RAM()
+        self.opcode_processor = weakref.ref(OpcodeProcessor(self))()
 
     def load_program(self, program=[]):
         address = 0
@@ -25,9 +30,12 @@ class CPU():
         self.is_running = True
 
         while self.is_running:
-            if self.program_counter > len(self.ram) - 1:
-                self.is_running = False
+            self.current_mem_address = self.ram.read(self.program_counter)
+
+            if self.opcode_processor.is_valid_opcode(self.current_mem_address):
+                pc_delta = self.opcode_processor.instruction_for_opcode(
+                    self.current_mem_address)()
+                self.program_counter += pc_delta
                 continue
 
-            print(self.ram.read(self.program_counter))
             self.program_counter += 1
